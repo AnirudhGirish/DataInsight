@@ -6,8 +6,9 @@
         body { font-family: Arial, sans-serif; }
         .container { max-width: 800px; margin: 0 auto; padding: 20px; }
         h1, h2 { color: #333; }
-        ul { list-style-type: none; padding: 0; }
-        li { margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; border: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
         a { display: inline-block; margin-top: 20px; color: #4CAF50; text-decoration: none; }
         a:hover { text-decoration: underline; }
     </style>
@@ -17,39 +18,72 @@
         <h1>Data Summary</h1>
 
         <h2>Data Types</h2>
-        <ul>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Data Type</th>
+            </tr>
             {% for key, value in summary.Data_Types.items %}
-            <li>{{ key }}: {{ value }}</li>
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
 
         <h2>Statistics</h2>
-        <ul>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Statistic</th>
+            </tr>
             {% for key, value in summary.Statistics.items %}
-            <li>{{ key }}: {{ value }}</li>
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
 
         <h2>Missing Values</h2>
-        <ul>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Missing Value Count</th>
+            </tr>
             {% for key, value in summary.Missing_Values.items %}
-            <li>{{ key }}: {{ value }}</li>
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
 
         <h2>Unique Values</h2>
-        <ul>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Unique Value Count</th>
+            </tr>
             {% for key, value in summary.Unique_Values.items %}
-            <li>{{ key }}: {{ value }}</li>
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
 
         <h2>First Few Rows</h2>
-        <ul>
+        <table>
+            <tr>
+                <th>Row</th>
+            </tr>
             {% for row in summary.First_Few_Rows %}
-            <li>{{ row }}</li>
+            <tr>
+                <td>{{ row }}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
 
         <a href="{% url 'summary_view' %}">Upload another file</a>
     </div>
