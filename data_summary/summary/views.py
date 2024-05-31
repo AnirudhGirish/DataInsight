@@ -1,41 +1,39 @@
 import os
+import pandas as pd
 from django.shortcuts import render
 from django.http import HttpResponse
-import pandas as pd
 from django.core.files.storage import FileSystemStorage
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
-def load_data(file_path):
-    if file_path.endswith('.csv'):
-        data = pd.read_csv(file_path)
-    elif file_path.endswith('.xlsx') or file_path.endswith('.xls'):
-        data = pd.read_excel(file_path)
+def load_data(file: InMemoryUploadedFile):
+    file_extension = file.name.split('.')[-1].lower()
+    if file_extension == 'csv':
+        data = pd.read_csv(file)
+    elif file_extension in ['xlsx', 'xls']:
+        data = pd.read_excel(file)
     else:
         raise ValueError("Unsupported file type. Please provide a CSV or Excel file.")
     return data
 
-def generate_summary_report(data):
-    summary = {}
-    summary['Data Types'] = data.dtypes.to_dict()
-    summary['Statistics'] = data.describe(include='all').to_dict()
-    summary['Missing Values'] = data.isnull().sum().to_dict()
-    summary['Unique Values'] = data.nunique().to_dict()
-    summary['First Few Rows'] = data.head().to_dict(orient='records')
+def generate_summary_report(data: pd.DataFrame):
+    summary = {
+        'Data Types': data.dtypes.to_dict(),
+        'Statistics': data.describe(include='all').to_dict(),
+        'Missing Values': data.isnull().sum().to_dict(),
+        'Unique Values': data.nunique().to_dict(),
+        'First Few Rows': data.head().to_dict(orient='records')
+    }
     return summary
 
 def summary_view(request):
-    if request.method == 'POST' and request.FILES['datafile']:
+    if request.method == 'POST' and request.FILES.get('datafile'):
         datafile = request.FILES['datafile']
-        fs = FileSystemStorage()
-        filename = fs.save(datafile.name, datafile)
-        file_path = fs.path(filename)
         
         try:
-            data = load_data(file_path)
+            data = load_data(datafile)
             summary = generate_summary_report(data)
         except ValueError as e:
             return HttpResponse(f"Error: {e}")
-        finally:
-            os.remove(file_path)  # Clean up uploaded file
-        
+
         return render(request, 'summary/summary.html', {'summary': summary})
     return render(request, 'summary/upload.html')

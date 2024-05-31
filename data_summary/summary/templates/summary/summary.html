@@ -2,45 +2,56 @@
 <html>
 <head>
     <title>Data Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1, h2 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; }
+        a { display: inline-block; margin-top: 20px; color: #4CAF50; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
-    <h1>Data Summary</h1>
+    <div class="container">
+        <h1>Data Summary</h1>
 
-    <h2>Data Types</h2>
-    <ul>
-        {% for key, value in summary.Data_Types.items %}
-        <li>{{ key }}: {{ value }}</li>
-        {% endfor %}
-    </ul>
+        <h2>Data Types</h2>
+        <ul>
+            {% for key, value in summary.Data_Types.items %}
+            <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
 
-    <h2>Statistics</h2>
-    <ul>
-        {% for key, value in summary.Statistics.items %}
-        <li>{{ key }}: {{ value }}</li>
-        {% endfor %}
-    </ul>
+        <h2>Statistics</h2>
+        <ul>
+            {% for key, value in summary.Statistics.items %}
+            <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
 
-    <h2>Missing Values</h2>
-    <ul>
-        {% for key, value in summary.Missing_Values.items %}
-        <li>{{ key }}: {{ value }}</li>
-        {% endfor %}
-    </ul>
+        <h2>Missing Values</h2>
+        <ul>
+            {% for key, value in summary.Missing_Values.items %}
+            <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
 
-    <h2>Unique Values</h2>
-    <ul>
-        {% for key, value in summary.Unique_Values.items %}
-        <li>{{ key }}: {{ value }}</li>
-        {% endfor %}
-    </ul>
+        <h2>Unique Values</h2>
+        <ul>
+            {% for key, value in summary.Unique_Values.items %}
+            <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
 
-    <h2>First Few Rows</h2>
-    <ul>
-        {% for row in summary.First_Few_Rows %}
-        <li>{{ row }}</li>
-        {% endfor %}
-    </ul>
+        <h2>First Few Rows</h2>
+        <ul>
+            {% for row in summary.First_Few_Rows %}
+            <li>{{ row }}</li>
+            {% endfor %}
+        </ul>
 
-    <a href="{% url 'summary_view' %}">Upload another file</a>
+        <a href="{% url 'summary_view' %}">Upload another file</a>
+    </div>
 </body>
 </html>

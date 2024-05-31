@@ -2,13 +2,31 @@
 <html>
 <head>
     <title>Upload Data File</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        button { background-color: #4CAF50; color: white; padding: 10px; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
 </head>
 <body>
-    <h1>Upload Data File</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="datafile" required>
-        <button type="submit">Upload</button>
-    </form>
+    <div class="container">
+        <h1>Upload Data File</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="file" name="datafile" required>
+            </div>
+            <button type="submit">Upload</button>
+        </form>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
