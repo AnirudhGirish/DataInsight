@@ -4,5 +4,5 @@ from summary.views import summary_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('summary/', summary_view, name='summary_view'),
+    path('', summary_view, name='summary_view'),
 ]
