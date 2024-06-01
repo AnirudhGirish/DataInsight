@@ -11,3 +11,4 @@ six
 sqlparse
 typing_extensions
 tzdata
+# this is requirements.txt
